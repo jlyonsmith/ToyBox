@@ -49,7 +49,7 @@ namespace ToyBox
 
 #if MONOTOUCH
 			// Use for debugging new iOS screen resolutions
-			// Debug.WriteLine(((int)UIScreen.MainScreen.CurrentMode.Size.Width).ToString());
+			//Debug.WriteLine(((int)UIScreen.MainScreen.CurrentMode.Size.Width).ToString());
 			
 			switch ((int)UIScreen.MainScreen.CurrentMode.Size.Width)
 			{

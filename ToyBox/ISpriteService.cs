@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +20,8 @@ namespace ToyBox
         void Draw();
         int HitTest(Point point);
         void FastForwardAnimations();
-        RenderTarget2D CreateRenderTarget(int width, int height, IList<TextureAndPosition> textureAndPositions);
-        void DrawRenderTarget(RenderTarget2D renderTarget, IList<TextureAndPosition> textureAndPositions);
+        RenderTarget2D CreateRenderTarget(int width, int height, IList<SpriteTextureAndPosition> textureAndPositions);
+        void DrawRenderTarget(RenderTarget2D renderTarget, IList<SpriteTextureAndPosition> textureAndPositions);
+		Color? BackgroundColor { get; set; }
     }
 }

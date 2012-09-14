@@ -18,13 +18,6 @@ namespace Microsoft.Xna.Framework
             return new Point(point.X + x, point.Y + y);
         }
 
-        /// <summary>
-        /// Gets the spacing defined by the rectangle and another, defined as the absolute horizontal and vertical
-        /// distance between the two rectangles top-left corners.
-        /// </summary>
-        /// <param name="rect"></param>
-        /// <param name="other"></param>
-        /// <returns></returns>
         public static Point Subtract(this Point point1, Point point2)
         {
             return new Point(point1.X - point2.X, point1.Y - point2.Y);
