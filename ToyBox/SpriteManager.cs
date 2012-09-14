@@ -8,26 +8,6 @@ using System.Collections;
 
 namespace ToyBox
 {
-    public class TextureAndPosition
-    {
-        public TextureAndPosition(Texture2D texture, Point point, Rectangle? sourceRectangle)
-            : this(texture, point.X, point.Y, sourceRectangle)
-        {
-        }
-
-        public TextureAndPosition(Texture2D texture, int x, int y, Rectangle? sourceRectangle)
-        {
-            this.Texture = texture;
-            this.SourceRectangle = sourceRectangle.HasValue ?
-                sourceRectangle.Value : new Rectangle(0, 0, texture.Width, texture.Height);
-            this.Position = new Vector2((float)x, (float)y);
-        }
-
-        public Texture2D Texture { get; private set; }
-        public Rectangle SourceRectangle { get; private set; }
-        public Vector2 Position { get; private set; } 
-    }
-
     public class SpriteEventArgs : EventArgs
     {
         public SpriteEventArgs(Sprite sprite)
@@ -112,7 +92,9 @@ namespace ToyBox
 
             base.Update(gameTime);
         }
-		
+
+		public Color? BackgroundColor { get; set; }
+
         public void AttachSprite(Sprite sprite, params Set<Sprite>[] spriteSets)
         {
 #if DEBUG
@@ -201,11 +183,16 @@ namespace ToyBox
         }
 
         public void Draw()
-        {
-            if (!Enabled)
+		{
+			if (!Enabled)
 				return;
 			
 			spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+
+			if (this.BackgroundColor.HasValue)
+			{
+				this.GraphicsDevice.Clear(BackgroundColor.Value); 
+			}
 
             foreach (var sprite in sprites)
             {
@@ -238,7 +225,7 @@ namespace ToyBox
             return foundIndex;
         }
 
-        public RenderTarget2D CreateRenderTarget(int width, int height, IList<TextureAndPosition> textureAndPositions)
+        public RenderTarget2D CreateRenderTarget(int width, int height, IList<SpriteTextureAndPosition> textureAndPositions)
         {
             RenderTarget2D renderTarget = new RenderTarget2D(
                 this.Game.GraphicsDevice, width, height,
@@ -250,7 +237,7 @@ namespace ToyBox
             return renderTarget;
         }
 
-        public void DrawRenderTarget(RenderTarget2D renderTarget, IList<TextureAndPosition> textureAndPositions)
+        public void DrawRenderTarget(RenderTarget2D renderTarget, IList<SpriteTextureAndPosition> textureAndPositions)
         {
             this.Game.GraphicsDevice.SetRenderTarget(renderTarget);
 
@@ -258,8 +245,16 @@ namespace ToyBox
 
             foreach (var textureAndPosition in textureAndPositions)
             {
-                spriteBatch.Draw(textureAndPosition.Texture, textureAndPosition.Position,
-                    textureAndPosition.SourceRectangle, Color.White);
+                spriteBatch.Draw(
+					textureAndPosition.SpriteTexture.Texture, 
+					textureAndPosition.Position,
+					textureAndPosition.SpriteTexture.SourceRectangle,
+                    Color.White,
+					0f,
+					Vector2.Zero,
+					textureAndPosition.SpriteTexture.Scale,
+					SpriteEffects.None,
+					0f);
             }
 
             spriteBatch.End();

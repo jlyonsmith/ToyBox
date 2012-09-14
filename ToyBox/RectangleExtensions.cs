@@ -55,5 +55,16 @@ namespace Microsoft.Xna.Framework
         {
             return new Rectangle((int)(rect.X + X * rect.Width), (int)(rect.Y + Y * rect.Height), rect.Width, rect.Height);
         }
+
+		/// <summary>
+		/// Get the size of the Rectangle
+		/// </summary>
+		/// <param name='rect'>
+		/// Rect.
+		/// </param>
+		public static Size Size(this Rectangle rect)
+		{
+			return new Size(rect.Width, rect.Height);
+		}
     }
 }

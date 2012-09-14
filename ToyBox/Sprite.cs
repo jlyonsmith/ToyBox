@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -78,7 +78,14 @@ namespace ToyBox
     public class TextureSprite : Sprite
     {
         private int activeTextureIndex;
-        private Rectangle rect;
+        
+		public SpriteTexture ActiveSpriteTexture 
+		{
+			get
+			{
+				return this.SpriteTextures[this.ActiveTextureIndex];
+			}
+		}
 
         public ReadOnlyCollection<SpriteTexture> SpriteTextures { get; private set; }
         public int ActiveTextureIndex 
@@ -90,31 +97,29 @@ namespace ToyBox
             set
             {
                 activeTextureIndex = value;
-                rect = this.SpriteTextures[this.ActiveTextureIndex].Rectangle;
             }
         }
         public override Size Size
         {
             get
             {
-                return new Size(rect.Width, rect.Height);
+                return ActiveSpriteTexture.DestinationSize;
             }
         }
         public override int Width
         {
-            get { return rect.Width; }
+			get { return ActiveSpriteTexture.DestinationSize.Width; }
         }
         public override int Height
         {
-            get { return rect.Height; }
+            get { return ActiveSpriteTexture.DestinationSize.Height; }
         }
         public override Rectangle Rectangle
         {
             get
             {
-                Rectangle textureRect = this.SpriteTextures[this.ActiveTextureIndex].Rectangle;
-
-                return new Rectangle(this.Position.X, this.Position.Y, textureRect.Width, textureRect.Height);
+				// TODO: Add a constructor to Rectangle that takes a Point and Size
+                return new Rectangle(this.Position.X, this.Position.Y, this.Width, this.Height);
             }
         }
 
@@ -143,18 +148,18 @@ namespace ToyBox
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            SpriteTexture texture = this.SpriteTextures[ActiveTextureIndex];
+            SpriteTexture spriteTexture = this.ActiveSpriteTexture;
 
             if (this.Rotation == 0.0f)
             {
                 spriteBatch.Draw(
-                    texture.Texture,
+                    spriteTexture.Texture,
                     new Vector2(Position.X, Position.Y),
-                    texture.Rectangle,
+                    spriteTexture.SourceRectangle,
                     TintColor,
                     0.0f,
                     Vector2.Zero,
-                    this.Scale,
+                    spriteTexture.Scale * this.Scale,
                     SpriteEffects.None,
                     xnaDepth);
             }
@@ -164,13 +169,13 @@ namespace ToyBox
                 Vector2 origin = new Vector2(RotationOrigin.X * size.Width, RotationOrigin.Y * size.Height);
 
                 spriteBatch.Draw(
-                    texture.Texture,
+                    spriteTexture.Texture,
                     new Vector2(Position.X + origin.X, Position.Y + origin.Y),
-                    texture.Rectangle,
+                    spriteTexture.SourceRectangle,
                     TintColor,
                     this.Rotation,
                     origin,
-                    this.Scale,
+                    spriteTexture.Scale * this.Scale,
                     SpriteEffects.None,
                     xnaDepth);
             }
@@ -270,4 +275,65 @@ namespace ToyBox
             }
         }
     }
+
+	public class BlankSprite : Sprite
+	{
+		#region Fields
+		private Size size;
+		#endregion
+
+		#region Construction
+		public BlankSprite (
+			Size size,
+	        Point position,
+	        int depth,
+	        bool visible,
+	        object gameObject)
+			: base(position, depth, visible, gameObject)
+		{
+			this.size = size;
+		}
+		
+		#endregion
+
+		#region Sprite Implementation
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			// Do nothing
+		}
+
+		public override Microsoft.Xna.Framework.Rectangle Rectangle
+		{
+			get
+			{
+				// TODO: Add a constructor to Rectangle that takes a Point and Size
+				return new Rectangle(this.Position.X, this.Position.Y, this.Width, this.Height);
+			}
+		}
+
+		public override Microsoft.Xna.Framework.Size Size
+		{
+			get
+			{
+				return this.size;
+			}
+		}
+
+		public override int Width
+		{
+			get
+			{
+				return this.size.Width;
+			}
+		}
+
+		public override int Height
+		{
+			get
+			{
+				return this.size.Height;
+			}
+		}
+		#endregion
+	}
 }
