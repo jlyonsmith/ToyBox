@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.ObjectModel;
 using System.Collections;
 
@@ -17,11 +15,12 @@ namespace ToyBox
         void DetachSprite(Sprite sprite);
         void DetachAllSprites();
         void AttachAnimation(Sprite sprite, Animation animation, params ActiveAnimationSetUpdater[] animationUpdaters);
-        void Draw();
         int HitTest(Point point);
         void FastForwardAnimations();
-        RenderTarget2D CreateRenderTarget(int width, int height, IList<SpriteTextureAndPosition> textureAndPositions);
-        void DrawRenderTarget(RenderTarget2D renderTarget, IList<SpriteTextureAndPosition> textureAndPositions);
-		Color? BackgroundColor { get; set; }
+#warning Need a way to create dynamic Textures
+		/*
+        Texture CreateTexture2D(int width, int height, IList<SpriteTextureAndPosition> textureAndPositions);
+        void DrawRenderTarget(Texture texture, IList<SpriteTextureAndPosition> textureAndPositions);
+        */
     }
 }

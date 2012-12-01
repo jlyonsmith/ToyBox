@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 
 namespace ToyBox
@@ -18,14 +16,13 @@ namespace ToyBox
         public Sprite Sprite { get; private set; }
     }
 
-    public class SpriteManager : GameComponent, ISpriteService
+    public class SpriteManager : DrawableGameComponent, ISpriteService
     {
-        private SpriteBatch spriteBatch;
+        private IGraphicsService graphicsService;
         private List<Animation> animations;
         private ReadOnlyCollection<Animation> readOnlyAnimations;
         private List<Sprite> sprites;
         private ReadOnlyCollection<Sprite> readOnlySprites;
-        
         public ReadOnlyCollection<Sprite> Sprites { get { return readOnlySprites; } }
         public ReadOnlyCollection<Animation> Animations { get { return readOnlyAnimations; } }
 
@@ -61,7 +58,7 @@ namespace ToyBox
         {
             base.Initialize();
 
-            spriteBatch = new SpriteBatch(Game.GraphicsDevice);
+			graphicsService = (IGraphicsService)Game.Services.GetService(typeof(IGraphicsService));
         }
 
         public override void Update(GameTime gameTime)
@@ -92,8 +89,6 @@ namespace ToyBox
 
             base.Update(gameTime);
         }
-
-		public Color? BackgroundColor { get; set; }
 
         public void AttachSprite(Sprite sprite, params Set<Sprite>[] spriteSets)
         {
@@ -182,26 +177,26 @@ namespace ToyBox
             this.sprites.Clear();
         }
 
-        public void Draw()
-		{
+		public override void Draw(GameTime gameTime) 
+		{ 
+			throw new NotImplementedException();
+
+#if DONT_COMPILE
+#warning Using Enabled instead of Visible
 			if (!Enabled)
 				return;
+
+			spriteBatch.Begin(SpriteSortMode.BackToFront, SpriteBlendMode.AlphaBlend);
 			
-			spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-
-			if (this.BackgroundColor.HasValue)
+			foreach (var sprite in sprites)
 			{
-				this.GraphicsDevice.Clear(BackgroundColor.Value); 
+				if (sprite.Visible)
+					sprite.Draw(spriteBatch);
 			}
-
-            foreach (var sprite in sprites)
-            {
-                if (sprite.Visible)
-                    sprite.Draw(spriteBatch);
-            }
-
-            spriteBatch.End();
-        }
+			
+			spriteBatch.End();
+#endif
+		}
 
         public int HitTest(Point point)
         {
@@ -225,11 +220,9 @@ namespace ToyBox
             return foundIndex;
         }
 
-        public RenderTarget2D CreateRenderTarget(int width, int height, IList<SpriteTextureAndPosition> textureAndPositions)
+        public Texture CreateRenderTarget(int width, int height, IList<SpriteTextureAndPosition> textureAndPositions)
         {
-            RenderTarget2D renderTarget = new RenderTarget2D(
-                this.Game.GraphicsDevice, width, height,
-                false, SurfaceFormat.Color, DepthFormat.None);
+            Texture renderTarget = new Texture(width, height, false, SurfaceFormat.Color, DepthFormat.None);
 
             if (textureAndPositions != null)
                 DrawRenderTarget(renderTarget, textureAndPositions);
@@ -237,15 +230,18 @@ namespace ToyBox
             return renderTarget;
         }
 
-        public void DrawRenderTarget(RenderTarget2D renderTarget, IList<SpriteTextureAndPosition> textureAndPositions)
+        public void DrawRenderTarget(Texture renderTarget, IList<SpriteTextureAndPosition> textureAndPositions)
         {
+			throw new NotImplementedException();
+
+#if DONT_COMPILE
             this.Game.GraphicsDevice.SetRenderTarget(renderTarget);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             foreach (var textureAndPosition in textureAndPositions)
             {
-                spriteBatch.Draw(
+                spriteBatch.Add(
 					textureAndPosition.SpriteTexture.Texture, 
 					textureAndPosition.Position,
 					textureAndPosition.SpriteTexture.SourceRectangle,
@@ -253,14 +249,18 @@ namespace ToyBox
 					0f,
 					Vector2.Zero,
 					textureAndPosition.SpriteTexture.Scale,
-					SpriteEffects.None,
 					0f);
             }
 
             spriteBatch.End();
 
             this.Game.GraphicsDevice.SetRenderTarget(null);
+#endif
         }
+
+		public void Draw()
+		{
+		}
 
         private string InsertNewLines(string text, SpriteFont font, int width, ref int height)
         {
@@ -279,9 +279,9 @@ namespace ToyBox
                 while (i < wordArray.Length)
                 {
                     // More words to add
-                    Vector2 lineSize = font.MeasureString(line + ' ' + wordArray[i]);
+                    Size lineSize = font.MeasureString(line + ' ' + wordArray[i]);
 
-                    if (lineSize.X > width)
+                    if (lineSize.Width > width)
                     {
                         // This word pushes us to the next line
                         newText += line + '\n';

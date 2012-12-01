@@ -58,14 +58,12 @@
     <Compile Include="ISpriteService.cs" />
     <Compile Include="IStorageService.cs" />
     <Compile Include="ITouchPanel.cs" />
-    <Compile Include="MathExtensions.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="MouseButtons.cs" />
     <Compile Include="MousePointerManager.cs" />
     <Compile Include="NoGamePad.cs" />
     <Compile Include="NoKeyboard.cs" />
     <Compile Include="NoTouchPanel.cs" />
-    <Compile Include="PointExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyList.cs" />
     <Compile Include="PropertyListManager.cs" />
@@ -84,17 +82,62 @@
     <Compile Include="TouchState.cs" />
     <Compile Include="XBoxGamePad.cs" />
     <Compile Include="IPlatformService.cs" />
-    <Compile Include="PlatformManager.cs" />
     <Compile Include="SpriteTextureAndPosition.cs" />
+    <Compile Include="IUpdatable.cs" />
+    <Compile Include="GameTime.cs" />
+    <Compile Include="GameComponent.cs" />
+    <Compile Include="IGameComponent.cs" />
+    <Compile Include="DrawableGameComponent.cs" />
+    <Compile Include="IDrawable.cs" />
+    <Compile Include="Keys.cs" />
+    <Compile Include="KeyboardState.cs" />
+    <Compile Include="KeyState.cs" />
+    <Compile Include="MouseState.cs" />
+    <Compile Include="ButtonState.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="Keyboard.cs" />
+    <Compile Include="PlayerIndex.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="GamePadState.cs" />
+    <Compile Include="GamePadDPad.cs" />
+    <Compile Include="Buttons.cs" />
+    <Compile Include="GamePadButtons.cs" />
+    <Compile Include="GamePadThumbSticks.cs" />
+    <Compile Include="Vector2.cs" />
+    <Compile Include="MathHelper.cs" />
+    <Compile Include="GamePadDeadZone.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="Matrix.cs" />
+    <Compile Include="Vector3.cs" />
+    <Compile Include="Quaternion.cs" />
+    <Compile Include="Vector4.cs" />
+    <Compile Include="GamePadTriggers.cs" />
+    <Compile Include="TouchCollection.cs" />
+    <Compile Include="TouchLocation.cs" />
+    <Compile Include="TouchLocationState.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GameServiceContainer.cs" />
+    <Compile Include="GameComponentCollection.cs" />
+    <Compile Include="GameComponentCollectionEventArgs.cs" />
+    <Compile Include="GraphicsService.cs" />
+    <Compile Include="IGraphicsService.cs" />
+    <Compile Include="SpriteBatch.cs" />
+    <Compile Include="SpriteFont.cs" />
+    <Compile Include="Texture.cs" />
+    <Compile Include="IContentManager.cs" />
+    <Compile Include="SpriteBlendMode.cs" />
+    <Compile Include="SpriteSortMode.cs" />
+    <Compile Include="SurfaceFormat.cs" />
+    <Compile Include="DepthFormat.cs" />
+    <Compile Include="Mouse.cs" />
+    <Compile Include="SortingFilteringCollection.cs" />
+    <Compile Include="iOS\PlatformManager.cs" />
+    <Compile Include="ContentManager.cs" />
+    <Compile Include="SoundEffect.cs" />
+    <Compile Include="SoundService.cs" />
+    <Compile Include="ISoundService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MonoGame.develop\ThirdParty\Lidgren.Network\Lidgren.Network.iOS.csproj">
-      <Project>{734EAA48-F1CA-481A-B391-0285BC0E8B40}</Project>
-      <Name>Lidgren.Network.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MonoGame.develop\MonoGame.Framework\MonoGame.Framework.iOS.csproj">
-      <Project>{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}</Project>
-      <Name>MonoGame.Framework.iOS</Name>
-    </ProjectReference>
+    <Folder Include="iOS\" />
   </ItemGroup>
 </Project>

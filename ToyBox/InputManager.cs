@@ -1,12 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -190,7 +184,6 @@ namespace ToyBox
         {
             var gamePads = new List<IGamePad>();
 
-            // Add default XNA game pads
             for (PlayerIndex player = PlayerIndex.One; player <= PlayerIndex.Four; ++player)
             {
                 gamePads.Add(new XBoxGamePad(player));
@@ -244,7 +237,6 @@ namespace ToyBox
 
 #if WINDOWS_PHONE
             // TODO-john-2012: Add the Windows Phone 7 touch panel
-            // touchPanels.Add(new XnaTouchPanel());
 #else
             touchPanels.Add(new NoTouchPanel());
 #endif

@@ -2,12 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using System.Collections;
 using System.Collections.ObjectModel;
 
@@ -16,6 +10,8 @@ namespace ToyBox
     public abstract class Sprite
     {
         public static readonly int MaxDepth = UInt16.MaxValue;
+
+#warning Remove xnaDepth
 
         protected float xnaDepth;
         protected int depth;
@@ -152,7 +148,7 @@ namespace ToyBox
 
             if (this.Rotation == 0.0f)
             {
-                spriteBatch.Draw(
+                spriteBatch.Add(
                     spriteTexture.Texture,
                     new Vector2(Position.X, Position.Y),
                     spriteTexture.SourceRectangle,
@@ -160,7 +156,6 @@ namespace ToyBox
                     0.0f,
                     Vector2.Zero,
                     spriteTexture.Scale * this.Scale,
-                    SpriteEffects.None,
                     xnaDepth);
             }
             else
@@ -168,7 +163,7 @@ namespace ToyBox
                 Size size = this.Size;
                 Vector2 origin = new Vector2(RotationOrigin.X * size.Width, RotationOrigin.Y * size.Height);
 
-                spriteBatch.Draw(
+                spriteBatch.Add(
                     spriteTexture.Texture,
                     new Vector2(Position.X + origin.X, Position.Y + origin.Y),
                     spriteTexture.SourceRectangle,
@@ -176,7 +171,6 @@ namespace ToyBox
                     this.Rotation,
                     origin,
                     spriteTexture.Scale * this.Scale,
-                    SpriteEffects.None,
                     xnaDepth);
             }
         }
@@ -186,7 +180,7 @@ namespace ToyBox
     {
         private Size size;
         private string text;
-        
+		private Texture texture;
         public SpriteFont Font { get; private set; }
         public String Text 
         {
@@ -197,7 +191,8 @@ namespace ToyBox
             set
             {
                 text = value;
-                size = new Size(Font.MeasureString(text));
+                texture = Font.CreateTexture(text);
+				size = texture.Size;
             }
         }
         public override Size Size
@@ -258,15 +253,13 @@ namespace ToyBox
         {
             if (this.Rotation == 0.0f)
             {
-                spriteBatch.DrawString(
-                    this.Font,
-                    this.Text,
-                    new Vector2(position.X, position.Y),
+                spriteBatch.Add(
+                    texture,
+                    position,
                     this.TintColor,
                     this.Rotation,
                     Vector2.Zero,
                     this.Scale,
-                    SpriteEffects.None,
                     xnaDepth);
             }
             else
@@ -302,7 +295,7 @@ namespace ToyBox
 			// Do nothing
 		}
 
-		public override Microsoft.Xna.Framework.Rectangle Rectangle
+		public override Rectangle Rectangle
 		{
 			get
 			{
@@ -311,7 +304,7 @@ namespace ToyBox
 			}
 		}
 
-		public override Microsoft.Xna.Framework.Size Size
+		public override Size Size
 		{
 			get
 			{

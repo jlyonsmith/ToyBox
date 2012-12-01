@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
-using MsGamePad = Microsoft.Xna.Framework.Input.GamePad;
 
 namespace ToyBox
 {
@@ -54,7 +51,8 @@ namespace ToyBox
 
             if (this.states.Count == 0)
             {
-                this.current = MsGamePad.GetState(this.playerIndex);
+#warning Need to find a replacement for this
+				//this.current = MsGamePad.GetState(this.playerIndex);
             }
             else
             {

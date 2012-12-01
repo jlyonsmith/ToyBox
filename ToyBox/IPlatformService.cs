@@ -1,5 +1,4 @@
 using System;
-using Microsoft.Xna.Framework;
 
 namespace ToyBox
 {
@@ -18,5 +17,7 @@ namespace ToyBox
 	{
 		PlatformType Platform { get; }
         Size AdBannerSize { get; }
-    }
+		void SendMail(string to, string title, string description, Action whenDismissed);
+		void Exit();
+	}
 }

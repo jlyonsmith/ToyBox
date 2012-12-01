@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace Microsoft.Xna.Framework
+namespace ToyBox
 {
     /// <summary>
     /// Defines a size in 2D space.
@@ -21,15 +21,7 @@ namespace Microsoft.Xna.Framework
             zero = new Size();
         }
 
-        /// <summary>
-        /// Specifies the x-coordinate of the Size.
-        /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
         public int Width;
-        /// <summary>
-        /// Specifies the y-coordinate of the Size.
-        /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
         public int Height;
 
         /// <summary>
@@ -61,7 +53,7 @@ namespace Microsoft.Xna.Framework
         /// <param name="point2"></param>
         public Size(Point point1, Point point2)
         {
-            Point point = point1.Subtract(point2);
+            Point point = point1.Translate(point2.Reverse());
         
             this.Width = point.X;
             this.Height = point.Y;
