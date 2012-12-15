@@ -127,7 +127,7 @@
     <Compile Include="Structs\Vector3.cs" />
     <Compile Include="Structs\Vector4.cs" />
     <Compile Include="Platform\iOS\GameApplicationDelegate.cs" />
-    <Compile Include="Platform\GameTime.cs" />
+    <Compile Include="Structs\GameTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Platform\" />
@@ -139,7 +139,6 @@
     <Folder Include="Sprite\" />
     <Folder Include="Storage\" />
     <Folder Include="GameScreen\" />
-    <Folder Include="Game\" />
     <Folder Include="Structs\" />
   </ItemGroup>
 </Project>

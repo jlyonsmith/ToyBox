@@ -21,6 +21,7 @@ namespace ToyBox
     {
         #region Fields
         public event DrawDelegate Draw;
+        public event UpdateDelegate Update;
         #endregion
 
         #region Construction
@@ -43,10 +44,17 @@ namespace ToyBox
         {
             eaglLayer.Opaque = true;
         }
-        
-        protected override void OnRenderFrame(FrameEventArgs e)
+
+        protected override void OnUpdateFrame(FrameEventArgs args)
         {
-            base.OnRenderFrame(e);
+            base.OnUpdateFrame(args);
+
+            RaiseUpdateEvent(args.Time);
+        }
+        
+        protected override void OnRenderFrame(FrameEventArgs args)
+        {
+            base.OnRenderFrame(args);
 
             RaiseDrawEvent();
 
@@ -92,9 +100,18 @@ namespace ToyBox
         private void RaiseDrawEvent()
         {
             DrawDelegate handler = this.Draw;
-
+            
             if (handler != null)
                 handler();
+        }
+
+        private void RaiseUpdateEvent(double elapsed)
+        {
+            UpdateDelegate handler = this.Update;
+            
+            if (handler != null)
+                // TODO-johnls: Fill in the GameTime values correctly
+                handler(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(elapsed), false));
         }
         #endregion
     }

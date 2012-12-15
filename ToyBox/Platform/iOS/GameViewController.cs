@@ -122,6 +122,7 @@ namespace ToyBox
 
         public override void ViewWillUnload()
         {
+#warning Dispose of all the Services correctly
         }
         #endregion
 
@@ -178,7 +179,19 @@ namespace ToyBox
             services.Add(typeof(T).GetType(), service);
         }
         
-        public event UpdateDelegate Update;
+        public event UpdateDelegate Update
+        {
+            add
+            {
+                if (gameView != null)
+                    gameView.Update += value;
+            }
+            remove
+            {
+                if (gameView != null)
+                    gameView.Update -= value;
+            }
+        }
 
         public event DrawDelegate Draw
         {

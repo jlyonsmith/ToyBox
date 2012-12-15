@@ -38,7 +38,7 @@ namespace ToyBox
 
         public void Update(GameTime gameTime)
         {
-            time += gameTime.ElapsedGameTime;
+            time += gameTime.TimeSinceLastUpdate;
 
             if (time < StartDelay)
             {
