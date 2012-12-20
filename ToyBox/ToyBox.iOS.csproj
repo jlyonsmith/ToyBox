@@ -46,7 +46,6 @@
     <Compile Include="Platform\DisplayOrientationConverter.cs" />
     <Compile Include="ServiceProviderExtension.cs" />
     <Compile Include="Graphics\Texture.cs" />
-    <Compile Include="Graphics\GraphicsService.cs" />
     <Compile Include="Graphics\SurfaceFormat.cs" />
     <Compile Include="Graphics\IGraphicsService.cs" />
     <Compile Include="Input\GamePadKeyboard.cs" />
@@ -110,8 +109,6 @@
     <Compile Include="GameScreen\IGameScreenService.cs" />
     <Compile Include="GameScreen\IGameScreen.cs" />
     <Compile Include="Platform\IPlatformService.cs" />
-    <Compile Include="Platform\iOS\GameView.cs" />
-    <Compile Include="Platform\iOS\GameViewController.cs" />
     <Compile Include="Sound\ISoundService.cs" />
     <Compile Include="Structs\Color.cs" />
     <Compile Include="Structs\Matrix.cs" />
@@ -122,12 +119,15 @@
     <Compile Include="Structs\Vector2.cs" />
     <Compile Include="Structs\Vector3.cs" />
     <Compile Include="Structs\Vector4.cs" />
-    <Compile Include="Platform\iOS\GameApplicationDelegate.cs" />
     <Compile Include="Structs\GameTime.cs" />
     <Compile Include="Collections\Set.cs" />
     <Compile Include="Graphics\DepthFormat.cs" />
     <Compile Include="Collections\CollectionHelper.cs" />
     <Compile Include="Collections\ActiveAnimationSetUpdater.cs" />
+    <Compile Include="Structs\TexturedVertex.cs" />
+    <Compile Include="iOS\GameView.cs" />
+    <Compile Include="iOS\GameViewController.cs" />
+    <Compile Include="iOS\GameApplicationDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Platform\" />

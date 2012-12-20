@@ -208,12 +208,12 @@ namespace ToyBox
             add
             {
                 if (gameView != null)
-                    gameView.Draw += value;
+                    gameView.Render += value;
             }
             remove
             {
                 if (gameView != null)
-                    gameView.Draw -= value;
+                    gameView.Render -= value;
             }
         }
         

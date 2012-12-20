@@ -5,19 +5,33 @@ namespace ToyBox
 {
 	public class Texture : IDisposable
 	{
-		public int Width;
-		public int Height;
+        #region Fields
+        private IGraphicsService graphicsService;
+        private int textureName;
+        #endregion
 
-		public Texture ()
-		{
-		}
+        #region Properties
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+        public ToyBox.Size Size
+        {
+            get { return new Size(Width, Height); }
+        }
+        #endregion
 
-		public Texture (int width, int height, bool b, SurfaceFormat color, DepthFormat none)
-		{
-			throw new NotImplementedException();
-		}
+        #region Construction
+        public Texture(IGraphicsService graphicsService, int width, int height, Color color)
+        {
+            this.graphicsService = graphicsService;
+        }
 
-		#region IDisposable implementation
+        public Texture(IGraphicsService graphicsService, int width, int height, byte[] data)
+        {
+            this.graphicsService = graphicsService;
+        }
+        #endregion
+
+        #region IDisposable
 
 		public void Dispose()
 		{
@@ -25,12 +39,6 @@ namespace ToyBox
 		}
 
 		#endregion
-
-		public ToyBox.Size Size
-		{
-			get;
-			set;
-		}
 
 #warning Put this into the ContentService
 		public static Texture FromPdfFile(string pdfFileName, int width, int height)

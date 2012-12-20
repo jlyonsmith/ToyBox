@@ -20,8 +20,15 @@ namespace ToyBox
     public class GameView : UIView
     {
         #region Fields
-        public event RenderDelegate Draw;
+        private CAEAGLLayer eaglLayer;
+        private EAGLContext context;
+        private CADisplayLink displayLink;
+        private Size size;
+        #endregion
+
+        #region Events
         public event UpdateDelegate Update;
+        public event RenderDelegate Render;
         #endregion
 
         #region Construction
@@ -39,7 +46,7 @@ namespace ToyBox
         #region Methods
         private void RaiseRenderEvent()
         {
-            RenderDelegate handler = this.Draw;
+            RenderDelegate handler = this.Render;
             
             if (handler != null)
                 handler();
