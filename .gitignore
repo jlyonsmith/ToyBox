@@ -9,6 +9,7 @@
 *.orig
 *.pidb
 *.userprefs
+.DS_Store
 thumbs.db
 UpgradeLog.xml
 cachefile-*

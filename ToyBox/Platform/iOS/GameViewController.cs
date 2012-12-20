@@ -21,7 +21,17 @@ namespace ToyBox
         private Size adBannerSize;
         private Dictionary<Type, object> services;
         private GameView gameView;
+        private int targetFramesPerSecond = 60;
         #endregion
+
+        public int TargetFramesPerSecond
+        {
+            get { return targetFramesPerSecond; }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         #region Construction
         public GameViewController()
@@ -193,7 +203,7 @@ namespace ToyBox
             }
         }
 
-        public event DrawDelegate Draw
+        public event RenderDelegate Draw
         {
             add
             {

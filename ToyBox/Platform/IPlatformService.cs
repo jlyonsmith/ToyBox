@@ -14,7 +14,7 @@ namespace ToyBox
 	}
 	
     public delegate void UpdateDelegate(GameTime gameTime);
-    public delegate void DrawDelegate();
+    public delegate void RenderDelegate();
 
     public interface IPlatformService
 	{
@@ -23,6 +23,6 @@ namespace ToyBox
 		void SendMail(string to, string title, string description, Action whenDismissed);
 		void Exit();
         event UpdateDelegate Update;
-        event DrawDelegate Draw;
+        event RenderDelegate Draw;
     }
 }

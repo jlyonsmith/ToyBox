@@ -17,10 +17,10 @@ using System.Collections.Generic;
 
 namespace ToyBox
 {
-    public class GameView : iPhoneOSGameView
+    public class GameView : UIView
     {
         #region Fields
-        public event DrawDelegate Draw;
+        public event RenderDelegate Draw;
         public event UpdateDelegate Update;
         #endregion
 
@@ -33,73 +33,13 @@ namespace ToyBox
 
         public GameView(RectangleF frame) : base(frame)
         {
-            LayerRetainsBacking = false;
-            LayerColorFormat = EAGLColorFormat.RGBA8;
-            ContextRenderingApi = EAGLRenderingAPI.OpenGLES2;
-        }
-        #endregion
-
-        #region Overrides
-        protected override void ConfigureLayer(CAEAGLLayer eaglLayer)
-        {
-            eaglLayer.Opaque = true;
-        }
-
-        protected override void OnUpdateFrame(FrameEventArgs args)
-        {
-            base.OnUpdateFrame(args);
-
-            RaiseUpdateEvent(args.Time);
-        }
-        
-        protected override void OnRenderFrame(FrameEventArgs args)
-        {
-            base.OnRenderFrame(args);
-
-            RaiseDrawEvent();
-
-            float[] squareVertices = {
-                -0.5f, -0.5f,
-                0.5f, -0.5f,
-                -0.5f, 0.5f, 
-                0.5f, 0.5f,
-            };
-            
-            byte[] squareColors = {
-                255, 255,   0, 255,
-                0,   255, 255, 255,
-                0,     0,    0,  0,
-                255,   0,  255, 255,
-            };
-            
-            MakeCurrent();
-
-            GL11.Viewport(0, 0, Size.Width, Size.Height);
-            
-            GL11.MatrixMode(ALL11.Projection);
-            GL11.LoadIdentity();
-            GL11.Ortho(-1.0f, 1.0f, -1.5f, 1.5f, -1.0f, 1.0f);
-            GL11.MatrixMode(ALL11.Modelview);
-            GL11.Rotate(3.0f, 0.0f, 0.0f, 1.0f);
-            
-            GL11.ClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-            GL11.Clear((uint)ALL11.ColorBufferBit);
-            
-            GL11.VertexPointer(2, ALL11.Float, 0, squareVertices);
-            GL11.EnableClientState(ALL11.VertexArray);
-            GL11.ColorPointer(4, ALL11.UnsignedByte, 0, squareColors);
-            GL11.EnableClientState(ALL11.ColorArray);
-            
-            GL11.DrawArrays(ALL11.TriangleStrip, 0, 4);
-            
-            SwapBuffers();
         }
         #endregion
 
         #region Methods
-        private void RaiseDrawEvent()
+        private void RaiseRenderEvent()
         {
-            DrawDelegate handler = this.Draw;
+            RenderDelegate handler = this.Draw;
             
             if (handler != null)
                 handler();
