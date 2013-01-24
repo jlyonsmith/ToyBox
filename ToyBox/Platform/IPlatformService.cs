@@ -24,5 +24,6 @@ namespace ToyBox
 		void Exit();
         event UpdateDelegate Update;
         event RenderDelegate Draw;
+        event EventHandler<EventArgs> DisplayOrientationChanged;
     }
 }

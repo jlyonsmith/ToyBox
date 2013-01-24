@@ -40,7 +40,6 @@ namespace ToyBox
 
 		#endregion
 
-#warning Put this into the ContentService
 		public static Texture FromPdfFile(string pdfFileName, int width, int height)
 		{
 #if DONT_COMPILE

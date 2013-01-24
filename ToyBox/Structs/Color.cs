@@ -6,7 +6,8 @@ namespace ToyBox
 	{
 		// ARGB
 		private uint packedValue;
-		
+
+        // TODO: Exactly HOW is the value packed!
 		private Color(uint packedValue)
 		{
 			this.packedValue = packedValue;
@@ -16,6 +17,7 @@ namespace ToyBox
 			//packedValue = (packedValue & 0xff00ff00) | ((packedValue & 0x000000ff) << 16) | ((packedValue & 0x00ff0000) >> 16);
 		}
 		
+        // TODO: Change to using OpenTK Vector3/Vector4
         public Color(Vector4 color)
         {
             packedValue = 0;

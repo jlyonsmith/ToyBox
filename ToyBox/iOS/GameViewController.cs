@@ -8,15 +8,12 @@ using System.Collections.Generic;
 
 namespace ToyBox
 {
+	// TODO: Create global Services class that has a property for each service.  Have a IBaseGameServices interface
+	// that guarantees a level of standardization.
+
     public class GameViewController : UIViewController, IPlatformService, IServiceProvider
     {
         #region Fields
-        public DisplayOrientation SupportedOrientations { get; set; }
-
-        public DisplayOrientation DefaultSupportedOrientations { get; private set; }
-
-        public event EventHandler<EventArgs> DisplayOrientationChanged;
-
         private PlatformType platformType;
         private Size adBannerSize;
         private Dictionary<Type, object> services;
@@ -24,14 +21,10 @@ namespace ToyBox
         private int targetFramesPerSecond = 60;
         #endregion
 
-        public int TargetFramesPerSecond
-        {
-            get { return targetFramesPerSecond; }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        #region Properties
+        public DisplayOrientation SupportedOrientations { get; set; }
+        public DisplayOrientation DefaultSupportedOrientations { get; private set; }
+        #endregion
 
         #region Construction
         public GameViewController()
@@ -76,18 +69,12 @@ namespace ToyBox
                 adBannerSize = new Size((int)size.Width, (int)size.Height);
 
             this.services = new Dictionary<Type, object>();
-            
+
             // Non-platform specific services
             AddService<IPlatformService>(this);
-            AddService<IGraphicsService>(new GraphicsService(this));
-            AddService<IGameScreenService>(new GameScreenService(this));
-            AddService<ISpriteService>(new SpriteService(this));
-            AddService<IInputService>(new InputService(this));
             AddService<IStorageService>(new StorageService(this));
             AddService<IPropertyListService>(new PropertyListService(this));
-            
-            // Platform specific services
-            AddService<IMousePointerService>(new MousePointerService(this));
+            AddService<IGameScreenService>(new GameScreenService(this));
         }
         #endregion
 
@@ -118,6 +105,12 @@ namespace ToyBox
             gameView = new GameView(frame);
 
             this.Add(gameView);
+
+            AddService<IGraphicsService>((IGraphicsService)gameView);
+            AddService<ISpriteService>(new SpriteService(this));
+            AddService<IInputService>(new InputService(this));
+            // TODO: Not needed for iOS
+            AddService<IMousePointerService>(new MousePointerService(this));
         }
 
         public override bool ShouldAutorotateToInterfaceOrientation(UIInterfaceOrientation toInterfaceOrientation)
@@ -127,6 +120,7 @@ namespace ToyBox
 
         public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
         {
+            // TODO-johnls: This needs to cause the GameView to re-create the OpenGL layer
             base.DidRotate(fromInterfaceOrientation);
         }
 
@@ -183,10 +177,10 @@ namespace ToyBox
         
         public void AddService<T>(object service)
         {
-            if (services.ContainsKey(typeof(T).GetType()))
+            if (services.ContainsKey(typeof(T)))
                 throw new ArgumentException("Service type already exists");
             
-            services.Add(typeof(T).GetType(), service);
+            services.Add(typeof(T), (T)service);
         }
         
         public event UpdateDelegate Update
@@ -216,7 +210,10 @@ namespace ToyBox
                     gameView.Render -= value;
             }
         }
-        
+ 
+        // TODO-johnls: This should go into an OrientationInputService
+        public event EventHandler<EventArgs> DisplayOrientationChanged;
+
         #endregion
 
         #region Methods

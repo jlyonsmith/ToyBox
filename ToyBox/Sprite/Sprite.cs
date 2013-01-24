@@ -10,10 +10,8 @@ namespace ToyBox
     public abstract class Sprite
     {
         public static readonly int MaxDepth = UInt16.MaxValue;
+        public static readonly int MinDepth = UInt16.MinValue;
 
-#warning Remove xnaDepth
-
-        protected float xnaDepth;
         protected int depth;
         protected Point position;
 
@@ -48,8 +46,7 @@ namespace ToyBox
             }
             set
             {
-                depth = Math.Max(0, Math.Min(value, MaxDepth));
-                xnaDepth = (float)depth / (float)MaxDepth;
+                depth = MathHelper.Clamp(value, MinDepth, MaxDepth);
             }
         }
         public object GameObject { get; set; }

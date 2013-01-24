@@ -46,7 +46,6 @@
     <Compile Include="Platform\DisplayOrientationConverter.cs" />
     <Compile Include="ServiceProviderExtension.cs" />
     <Compile Include="Graphics\Texture.cs" />
-    <Compile Include="Graphics\SurfaceFormat.cs" />
     <Compile Include="Graphics\IGraphicsService.cs" />
     <Compile Include="Input\GamePadKeyboard.cs" />
     <Compile Include="Input\GamePadButtons.cs" />
@@ -77,7 +76,6 @@
     <Compile Include="Input\TouchLocationState.cs" />
     <Compile Include="Input\TouchState.cs" />
     <Compile Include="Input\XBoxGamePad.cs" />
-    <Compile Include="Input\InputManager.cs" />
     <Compile Include="Input\ButtonState.cs" />
     <Compile Include="Input\Buttons.cs" />
     <Compile Include="Input\StandardKeyboard.cs" />
@@ -121,13 +119,13 @@
     <Compile Include="Structs\Vector4.cs" />
     <Compile Include="Structs\GameTime.cs" />
     <Compile Include="Collections\Set.cs" />
-    <Compile Include="Graphics\DepthFormat.cs" />
     <Compile Include="Collections\CollectionHelper.cs" />
     <Compile Include="Collections\ActiveAnimationSetUpdater.cs" />
     <Compile Include="Structs\TexturedVertex.cs" />
     <Compile Include="iOS\GameView.cs" />
     <Compile Include="iOS\GameViewController.cs" />
     <Compile Include="iOS\GameApplicationDelegate.cs" />
+    <Compile Include="Input\InputService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Platform\" />
@@ -141,5 +139,12 @@
     <Folder Include="GameScreen\" />
     <Folder Include="Structs\" />
     <Folder Include="Collections\" />
+    <Folder Include="Shaders\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\SpriteFragment.glsl">
+      <LogicalName>SpriteFragment.glsl</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shaders\SpriteVertex.glsl" />
   </ItemGroup>
 </Project>

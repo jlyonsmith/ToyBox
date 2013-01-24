@@ -4,16 +4,9 @@ using System.Text;
 
 namespace ToyBox
 {
+    // TODO: Can this be an extension of Math?
 	public static class MathHelper
 	{
-		public const float E = (float)Math.E;
-		public const float Log10E = 0.4342945f;
-		public const float Log2E = 1.442695f;
-		public const float Pi = (float)Math.PI;
-		public const float PiOver2 = (float)(Math.PI / 2.0);
-		public const float PiOver4 = (float)(Math.PI / 4.0);
-		public const float TwoPi = (float)(Math.PI * 2.0);
-		
 		public static float Barycentric(float value1, float value2, float value3, float amount1, float amount2)
 		{
 			return value1 + (value2 - value1) * amount1 + (value3 - value1) * amount2;
@@ -31,19 +24,27 @@ namespace ToyBox
 			                      (3.0 * value2 - value1 - 3.0 * value3 + value4) * amountCubed));
 		}
 		
-		public static float Clamp(float value, float min, float max)
-		{
-			// First we check to see if we're greater than the max
-			value = (value > max) ? max : value;
-			
-			// Then we check to see if we're less than the min.
-			value = (value < min) ? min : value;
-			
-			// There's no check to see if min > max.
-			return value;
-		}
-		
-		public static float Distance(float value1, float value2)
+        public static float Clamp(float value, float min, float max)
+        {
+            if (value > max)
+                return max;
+            else if (value < min)
+                return min;
+            else 
+                return value;
+        }
+        
+        public static int Clamp(int value, int min, int max)
+        {
+            if (value > max)
+                return max;
+            else if (value < min)
+                return min;
+            else 
+                return value;
+        }
+        
+        public static float Distance(float value1, float value2)
 		{
 			return Math.Abs(value1 - value2);
 		}
@@ -67,7 +68,6 @@ namespace ToyBox
 					v1;
 			return (float)result;
 		}
-		
 		
 		public static float Lerp(float value1, float value2, float amount)
 		{
